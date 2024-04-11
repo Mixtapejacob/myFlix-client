@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useState } from "react";
-import { MovieCard } from "./book-card";
-import { MovieView } from "./book-view";
+import { MovieCard } from "../book card/book-card";
+import { MovieView } from "../book view/book-view";
 import { LoginView } from "../login-view/login-view";
 
 
