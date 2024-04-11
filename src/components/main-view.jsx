@@ -1,53 +1,47 @@
+import { useState, useEffect } from "react";
 import { useState } from "react";
-import { BookCard } from "./book-card";
-import { BookView } from "./book-view";
+import { MovieCard } from "./book-card";
+import { MovieView } from "./book-view";
 
 export const MainView = () => {
-  const [books, setBooks] = useState([
-    {
-      id: 1,
-      title: "Eloquent JavaScript",
-      image:
-        "https://images-na.ssl-images-amazon.com/images/I/51InjRPaF7L._SX377_BO1,204,203,200_.jpg",
-      author: "Marijn Haverbeke"
-    },
-    {
-      id: 2,
-      title: "Mastering JavaScript Functional Programming",
-      image:
-        "https://images-na.ssl-images-amazon.com/images/I/51WAikRq37L._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-      author: "Federico Kereki"
-    },
-    {
-      id: 3,
-      title: "JavaScript: The Good Parts",
-      image:
-        "https://images-na.ssl-images-amazon.com/images/I/5131OWtQRaL._SX381_BO1,204,203,200_.jpg",
-      author: "Douglas Crockford"
-    },
-    {
-      id: 4,
-      title: "JavaScript: The Definitive Guide",
-      image:
-        "https://images-na.ssl-images-amazon.com/images/I/51HbNW6RzhL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg",
-      author: "David Flanagan"
-    },
-    {
-      id: 5,
-      title: "The Road to React",
-      image:
-        "https://images-na.ssl-images-amazon.com/images/I/41MBLi5a4jL._SX384_BO1,204,203,200_.jpg",
-      author: "Robin Wieruch"
-    }
-  ]);
+  const [books, setBooks] = useState([]);
+  const [movies, setMovies] = useState([]);
 
   const [selectedBook, setSelectedBook] = useState(null);
 
+
+  useEffect(() => {
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4MTBlOTFkMzUyNzdiNWY0Y2NkNjMiLCJVc2VybmFtZSI6ImpvbmRvZTIiLCJQYXNzd29yZCI6IiQyYiQxMCRlSFB0RWZ3b1VNQnNOTHNROG5meHJ1MUZNc2piR08xbEkxVnJXZzFnTUl3NDQyR0RaWlBnaSIsIkVtYWlsIjoiam9uZG9lMkBtYWlsLmNvbSIsIkJpcnRoZGF5IjoiMjAwMS0wMS0wMVQwMDowMDowMC4wMDBaIiwiRmF2b3JpdGVNb3ZpZXMiOltdLCJfX3YiOjAsImlhdCI6MTcxMjg1MzIzMiwiZXhwIjoxNzEzNDU4MDMyLCJzdWIiOiJqb25kb2UyIn0.AfZ_2e7I0yH8mEEVHzg-c7V0PIgkz07f48flYEtUbr4";
+    fetch("https://movie-api-ul5k.onrender.com/movies", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        const moviesFromApi = data.map((movie) => {
+          return {
+            _id: movie._id,
+            Title: movie.Title,
+            Description: movie.Description,
+            Genre: {
+                Name: movie.Genre.Name
+            },
+            Director: {
+                Name: movie.Director.Name
+            }
+          };
+        });
+
+        setMovies(moviesFromApi);
+      });
+  }, []);
+
+
   if (selectedBook) {
-    return <BookView book={selectedBook} onBackClick={() => setSelectedBook(null)} />
+    return <MovieView movie={selectedBook} onBackClick={() => setSelectedBook(null)} />
   }
 
-  if (books.length === 0) {
+  if (movies.length === 0) {
     return <div>The list is empty!</div>;
   }
 
@@ -60,11 +54,11 @@ export const MainView = () => {
       >
         Click me!
       </button>
-      {books.map((book) => (
-        <BookCard
-        key={book.id}
-        book={book}
-        onBookClick={(newSelectedBook) => {
+      {movies.map((movie) => (
+        <MovieCard
+        key={movie._id}
+        movie={movie}
+        onMovieClick={(newSelectedBook) => {
           setSelectedBook(newSelectedBook);
         }}
       />
