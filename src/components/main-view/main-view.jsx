@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useState } from "react";
-import { MovieCard } from "../book card/book-card";
-import { MovieView } from "../book view/book-view";
+import { MovieCard } from "../book-card/book-card";
+import { MovieView } from "../book-view/book-view";
 import { LoginView } from "../login-view/login-view";
 
 
@@ -40,13 +40,14 @@ export const MainView = () => {
   }, []);
 
 
-  if (selectedBook) {
-    return <MovieView movie={selectedBook} onBackClick={() => setSelectedBook(null)} />
+  if (selectedMovie) {
+    return <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
   }
 
   if (movies.length === 0) {
     return <div>The list is empty!</div>;
   }
+ 
 
   return (
     <div>
@@ -61,8 +62,8 @@ export const MainView = () => {
         <MovieCard
         key={movie._id}
         movie={movie}
-        onMovieClick={(newSelectedBook) => {
-          setSelectedBook(newSelectedBook);
+        onMovieClick={(newSelectedMovie) => {
+          setSelectedMovie(newSelectedMovie);
         }}
       />
       ))}
