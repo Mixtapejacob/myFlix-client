@@ -1,6 +1,5 @@
 import { createRoot } from 'react-dom/client';
 
-import { createRoot } from "react-dom/client";
 
 import { MainView } from "./components/main-view/main-view";
 
