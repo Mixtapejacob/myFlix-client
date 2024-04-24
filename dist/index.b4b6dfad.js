@@ -27200,7 +27200,7 @@ const MainView = ()=>{
     const [movies, setMovies] = (0, _react.useState)([]);
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     (0, _react.useEffect)(()=>{
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4MTBlOTFkMzUyNzdiNWY0Y2NkNjMiLCJVc2VybmFtZSI6ImpvbmRvZTIiLCJQYXNzd29yZCI6IiQyYiQxMCRlSFB0RWZ3b1VNQnNOTHNROG5meHJ1MUZNc2piR08xbEkxVnJXZzFnTUl3NDQyR0RaWlBnaSIsIkVtYWlsIjoiam9uZG9lMkBtYWlsLmNvbSIsIkJpcnRoZGF5IjoiMjAwMS0wMS0wMVQwMDowMDowMC4wMDBaIiwiRmF2b3JpdGVNb3ZpZXMiOltdLCJfX3YiOjAsImlhdCI6MTcxMjg1MzIzMiwiZXhwIjoxNzEzNDU4MDMyLCJzdWIiOiJqb25kb2UyIn0.AfZ_2e7I0yH8mEEVHzg-c7V0PIgkz07f48flYEtUbr4";
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4MTBlOTFkMzUyNzdiNWY0Y2NkNjMiLCJVc2VybmFtZSI6ImpvbmRvZTIiLCJQYXNzd29yZCI6IiQyYiQxMCRlSFB0RWZ3b1VNQnNOTHNROG5meHJ1MUZNc2piR08xbEkxVnJXZzFnTUl3NDQyR0RaWlBnaSIsIkVtYWlsIjoiam9uZG9lMkBtYWlsLmNvbSIsIkJpcnRoZGF5IjoiMjAwMS0wMS0wMVQwMDowMDowMC4wMDBaIiwiRmF2b3JpdGVNb3ZpZXMiOltdLCJfX3YiOjAsImlhdCI6MTcxMzgyNDAxMiwiZXhwIjoxNzE0NDI4ODEyLCJzdWIiOiJqb25kb2UyIn0.sX6ccfm0uKcVgJsjKKulMoWwaDWA3jYjJod106VSuBU";
         fetch("https://movie-api-ul5k.onrender.com/movies", {
             headers: {
                 Authorization: `Bearer ${token}`
