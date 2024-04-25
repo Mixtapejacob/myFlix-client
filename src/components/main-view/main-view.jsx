@@ -1,63 +1,105 @@
 import { useState, useEffect } from "react";
-import { MovieCard } from "../book-card/book-card";
-import { MovieView } from "../book-view/book-view";
+import { MovieCard } from "../movie-card/movie-card";
+import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
-
+import { SignupView } from "../signup-view/signup-view";
 
 export const MainView = () => {
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  const storedToken = localStorage.getItem("token");
-  const [user, setUser] = useState(storedUser? storedUser : null);
-  const [token, setToken] = useState(storedToken? storedToken : null);
-  const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
+	const storedUser = JSON.parse(localStorage.getItem("user"));
+	const storedToken = localStorage.getItem("token");
+	const [movies, setMovies] = useState([]);
+	const [selectedMovie, setSelectedMovie] = useState(null);
+	const [user, setUser] = useState(storedUser ? storedUser : null);
+	const [token, setToken] = useState(storedToken ? storedToken : null);
 
-  useEffect(() => {
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4MTBlOTFkMzUyNzdiNWY0Y2NkNjMiLCJVc2VybmFtZSI6ImpvbmRvZTIiLCJQYXNzd29yZCI6IiQyYiQxMCRlSFB0RWZ3b1VNQnNOTHNROG5meHJ1MUZNc2piR08xbEkxVnJXZzFnTUl3NDQyR0RaWlBnaSIsIkVtYWlsIjoiam9uZG9lMkBtYWlsLmNvbSIsIkJpcnRoZGF5IjoiMjAwMS0wMS0wMVQwMDowMDowMC4wMDBaIiwiRmF2b3JpdGVNb3ZpZXMiOltdLCJfX3YiOjAsImlhdCI6MTcxMzgyNDAxMiwiZXhwIjoxNzE0NDI4ODEyLCJzdWIiOiJqb25kb2UyIn0.sX6ccfm0uKcVgJsjKKulMoWwaDWA3jYjJod106VSuBU";
-    fetch("https://movie-api-ul5k.onrender.com/movies", {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-        const moviesFromApi = data.map((movie) => {
-          return {
-            ...movie
-          };
-        });
+	/* --- Keeping as Reference ---
+		useEffect(() => {
+			fetch("https://movie-api-ul5k.onrender.com/movies")
+				.then((response) => response.json())
+				.then((data) => {
+					const moviesFromApi = data.map((doc) => {
+						return {
+							title: doc.title,
+							image: doc.imagePath,
+							director: doc.director,
+							genre: doc.genre,
+							description: doc.description
+						};
+					});
+	
+					setMovies(moviesFromApi)
+				});
+		}, []);
+		*/
 
-        setMovies(moviesFromApi);
-      });
-  }, []);
+	useEffect(() => {
+		if (!token) {
+			return;
+		}
+
+		fetch("https://movie-api-ul5k.onrender.com/movies", {
+			headers: { Authorization: `Bearer ${token}` }
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				const moviesFromApi = data.map((doc) => {
+					return {
+						id: doc._id,
+						Title: doc.Title,
+						ImagePath: doc.ImagePath,
+						Director: doc.Director,
+						Genre: doc.Genre,
+						Description: doc.Description
+					};
+				});
+
+				setMovies(moviesFromApi)
+			});
+	}, [token]);
 
 
-  if (selectedMovie) {
-    return <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
-  }
+	if (selectedMovie) {
+		return (
+			<MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+		)
+	}
+	/*
+	if (movies.length === 0) {
+		return <div>The list is empty!</div>
+	}*/
 
-  if (movies.length === 0) {
-    return <div>The list is empty!</div>;
-  }
- 
+	if (!user) {
+		return (
+			<>
+				<LoginView
+					onLoggedIn={(user, token) => {
+						setUser(user);
+						setToken(token);
+					}}
+				/>
+				or
+				<SignupView />
+			</>
+		);
+	}
 
-  return (
-    <div>
-      <button
-        onClick={() => {
-          alert("Nice!");
-        }}
-      >
-        Click me!
-      </button>
-      {movies.map((m) => (
-        <MovieCard
-        key={m._id}
-        m={m}
-        onMovieClick={(newSelectedMovie) => {
-          setSelectedMovie(newSelectedMovie);
-        }}
-      />
-      ))}
-    </div>
-  );
-};
+	return (
+		<div>
+			{movies.map((movie) => (
+				<MovieCard
+					key={movie.id}
+					movie={movie}
+					onMovieClick={(newSelectedMovie) => {
+						setSelectedMovie(newSelectedMovie);
+					}}
+				/>
+			))}
+			<button onClick={() => {
+				setUser(null);
+				setToken(null);
+				localStorage.removeItem('user');
+				localStorage.removeItem('token')
+			}}>Logout</button>
+		</div>
+	)
+}

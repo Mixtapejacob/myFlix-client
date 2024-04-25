@@ -1,1 +1,1 @@
-# myFlix-client
+# MyFlix Client Side 

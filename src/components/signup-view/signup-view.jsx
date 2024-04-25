@@ -1,4 +1,4 @@
-import{ useState } from "react";
+import { useState } from "react";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
@@ -6,29 +6,33 @@ export const SignupView = () => {
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
 
-  const handleSubmit = (event) => {};
-  const data = {
-    Username: username,
-    Password: password,
-    Email: email,
-    Birthday: birthday
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const data = {
+      Username: username,
+      Password: password,
+      Email: email,
+      Birthday: birthday
+    }
+    
+    fetch("https://movie-api-ul5k.onrender.com/users", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Signup successful");
+          window.location.reload();
+        } else {
+          alert("Signup failed")
+        }
+      });
   };
 
-  fetch("SIGNUP_URL", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }).then((response) => {
-    if (response.ok) {
-      alert("Signup successful");
-      window.location.reload();
-    } else {
-      alert("Signup failed");
-    }
-  });
-};
 
   return (
     <form onSubmit={handleSubmit}>
@@ -39,13 +43,13 @@ export const SignupView = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          minLength="3"
+        //minLength="4"
         />
       </label>
       <label>
         Password:
         <input
-          type="password"
+          type="text"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -71,4 +75,5 @@ export const SignupView = () => {
       </label>
       <button type="submit">Submit</button>
     </form>
-  );
+  )
+}
