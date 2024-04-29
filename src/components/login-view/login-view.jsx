@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button } from "react-bootstrap";
 
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
@@ -57,9 +58,9 @@ export const LoginView = ({ onLoggedIn }) => {
           required
         />
       </label>
-      <button type="submit">
+      <Button type="submit">
         Submit
-      </button>
+      </Button>
     </form>
   );
 };
