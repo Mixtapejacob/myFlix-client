@@ -3,6 +3,7 @@ import { MainView } from "./components/main-view/main-view";
 
 // import statement to indicate necessary bundling of './index.scss'
 import "./index.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // Main component (will eventually use all the others)
 const MyFlixApplication = () => {
