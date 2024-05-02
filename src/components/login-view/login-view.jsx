@@ -1,6 +1,5 @@
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { Button } from "react-bootstrap";
 
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
@@ -28,30 +27,18 @@ export const LoginView = ({ onLoggedIn }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          minLength="3"
-        />
-      </Form.Group>
-
-      <Form.Group controlId="formPassword">
-        <Form.Label>Password:</Form.Label>
-        <Form.Control
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <Button variant="primary" type="submit">
+    <form onSubmit={handleSubmit}>
+      <div class="form-group">
+    <label for="Username">Username</label>
+    <input type="text" onChange={(e) => setUsername(e.target.value)} class="form-control" aria-describedby="username" placeholder="Enter username" />
+  </div>
+  <div class="form-group">
+    <label for="Password">Password</label>
+    <input type="password" onChange={(e) => setPassword(e.target.value)} class="form-control" aria-describedby="password" placeholder="Enter password" />
+  </div>
+      <Button type="submit">
         Submit
       </Button>
-    </Form>
+    </form>
   );
 };
