@@ -131,8 +131,6 @@ img {
 }
 
 [data-bs-theme="dark"] {
-  --lightningcss-light: ;
-  --lightningcss-dark: initial;
   color-scheme: dark;
   --bs-body-color: #dee2e6;
   --bs-body-color-rgb: 222, 226, 230;
@@ -283,6 +281,7 @@ p {
 abbr[title] {
   cursor: help;
   text-decoration-skip-ink: none;
+  -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted;
 }
 
@@ -2326,6 +2325,7 @@ progress {
 }
 
 .form-control::file-selector-button {
+  margin: -.375rem -.75rem;
   color: var(--bs-body-color);
   background-color: var(--bs-tertiary-bg);
   pointer-events: none;
@@ -2333,7 +2333,6 @@ progress {
   border-style: solid;
   border-width: 0;
   border-inline-end-width: var(--bs-border-width);
-  margin: -.375rem -.75rem;
   border-radius: 0;
   margin-inline-end: .75rem;
   padding: .375rem .75rem;
@@ -5783,7 +5782,8 @@ textarea.form-control-lg {
   position: fixed;
   top: 0;
   left: 0;
-  overflow: hidden auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .modal-dialog {
@@ -7211,12 +7211,15 @@ textarea.form-control-lg {
 
 .placeholder-wave {
   animation: 2s linear infinite placeholder-wave;
+  -webkit-mask-image: linear-gradient(130deg, #000 55%, #000c 75%, #000 95%);
   mask-image: linear-gradient(130deg, #000 55%, #000c 75%, #000 95%);
+  -webkit-mask-size: 200% 100%;
   mask-size: 200% 100%;
 }
 
 @keyframes placeholder-wave {
   100% {
+    -webkit-mask-position: -200% 0;
     mask-position: -200% 0;
   }
 }
@@ -13201,4 +13204,5 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-/*# sourceMappingURL=index.2212206d.css.map */
+
+/*# sourceMappingURL=index.5f1df611.css.map */
