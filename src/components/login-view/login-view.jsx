@@ -44,6 +44,7 @@ export const LoginView = ({ onLoggedIn }) => {
         Username:
         <input
           type="text"
+          placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
@@ -54,6 +55,7 @@ export const LoginView = ({ onLoggedIn }) => {
         Password:
         <input
           type="text"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required

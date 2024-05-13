@@ -6,10 +6,12 @@
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
     "react-router": "^6.23.0",
-    "react-router-dom": "^6.23.0"
+    "react-router-dom": "^6.23.0",
+    "redux": "^4.2.1"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.12.0",
+    "parcel": "^2.12.0",
     "process": "^0.11.10"
   }
 }
