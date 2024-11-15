@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-export const LoginView = ({ onLoggedIn, onShowSignupForm }) => {
+export const SignupView = ({ onShowLoginForm }) => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const [email, setEmail] = useState('');
+	const [birthday, setBirthday] = useState('');
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -12,30 +14,24 @@ export const LoginView = ({ onLoggedIn, onShowSignupForm }) => {
 		const data = {
 			Username: username,
 			Password: password,
+			Email: email,
+			Birthday: birthday,
 		};
 
-		fetch('https://movie-api-ul5k.onrender.com/login', {
+		fetch('https://movie-api-ul5k.onrender.com/users', {
 			method: 'POST',
+			body: JSON.stringify(data),
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(data),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				console.log('Login response: ', data);
-				if (data.user) {
-					localStorage.setItem('user', JSON.stringify(data.user));
-					localStorage.setItem('token', data.token);
-					location.href = '/';
-					//onLoggedIn(data.user, data.token);
-				} else {
-					alert('No such user');
-				}
-			})
-			.catch((e) => {
-				alert('Something went wrong');
-			});
+		}).then((response) => {
+			if (response.ok) {
+				alert('Signup successful');
+				window.location.reload();
+			} else {
+				alert('Signup failed: ${data.error.message}');
+			}
+		});
 	};
 
 	return (
@@ -53,6 +49,7 @@ export const LoginView = ({ onLoggedIn, onShowSignupForm }) => {
 						required
 					/>
 				</Form.Group>
+
 				<Form.Group
 					className="mb-3"
 					controlId="formPassword"
@@ -65,6 +62,33 @@ export const LoginView = ({ onLoggedIn, onShowSignupForm }) => {
 						required
 					/>
 				</Form.Group>
+
+				<Form.Group
+					className="mb-3"
+					controlId="formEmail"
+				>
+					<Form.Label>Email:</Form.Label>
+					<Form.Control
+						type="email"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+						required
+					/>
+				</Form.Group>
+
+				<Form.Group
+					className="mb-3"
+					controlId="formBirthday"
+				>
+					<Form.Label>Birthday:</Form.Label>
+					<Form.Control
+						type="date"
+						value={birthday}
+						onChange={(e) => setBirthday(e.target.value)}
+						required
+					/>
+				</Form.Group>
+
 				<Button
 					variant="primary"
 					type="submit"
@@ -75,9 +99,9 @@ export const LoginView = ({ onLoggedIn, onShowSignupForm }) => {
 			<Button
 				className="p-0 align-self-end"
 				variant="link"
-				onClick={onShowSignupForm}
+				onClick={onShowLoginForm}
 			>
-				Don't have an account?
+				Already have an account?
 			</Button>
 		</>
 	);
